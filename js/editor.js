@@ -14,7 +14,7 @@ var imgIns;
 $(document).ready(function () {
         $('#data').hide();
         //setup front side canvas 
-        canvas = new fabric.Canvas('tcanvas', {
+        canvas = new fabric.Canvas('tc', {
                 hoverCursor: 'pointer',
                 selection: true,
                 selectionBorderColor: 'blue'
@@ -22,6 +22,23 @@ $(document).ready(function () {
         canvas.on({
                 'object:moving': function (e) {
                         e.target.opacity = 0.5;
+
+                        var obj = e.target;
+                        // if object is too big ignore
+                        if (obj.currentHeight > obj.canvas.height || obj.currentWidth > obj.canvas.width) {
+                                return;
+                        }
+                        obj.setCoords();
+                        // top-left  corner
+                        if (obj.getBoundingRect().top < 0 || obj.getBoundingRect().left < 0) {
+                                obj.top = Math.max(obj.top, obj.top - obj.getBoundingRect().top);
+                                obj.left = Math.max(obj.left, obj.left - obj.getBoundingRect().left);
+                        }
+                        // bot-right corner
+                        if (obj.getBoundingRect().top + obj.getBoundingRect().height > obj.canvas.height || obj.getBoundingRect().left + obj.getBoundingRect().width > obj.canvas.width) {
+                                obj.top = Math.min(obj.top, obj.canvas.height - obj.getBoundingRect().height + obj.top - obj.getBoundingRect().top);
+                                obj.left = Math.min(obj.left, obj.canvas.width - obj.getBoundingRect().width + obj.left - obj.getBoundingRect().left);
+                        }
                 },
                 'object:modified': function (e) {
                         e.target.opacity = 1;
@@ -60,60 +77,6 @@ $(document).ready(function () {
         });
         $('.language-control').change(function () { //TO DO
         });
-        //        $('.btn-checkbox').click(function (e) {
-        //                $('.btn-checkbox').not(this).removeClass('active').siblings('input').prop('checked', false).siblings('.img-radio').css('opacity', '0.5');
-        //                if (!$(this).addClass('active').siblings('input').prop('checked')) {
-        //                        $(this).addClass('active').siblings('input').prop('checked', true).siblings('.img-radio').css('opacity', '1');
-        //                        if (this.value == 1) {
-        //                                textHeader = new fabric.Text("Header", {
-        //                                        left: 220,
-        //                                        top: 50,
-        //                                        fontFamily: 'helvetica',
-        //                                        angle: 0,
-        //                                        fill: '#000000',
-        //                                        scaleX: 1,
-        //                                        scaleY: 1,
-        //                                        fontWeight: '',
-        //                                        hasRotatingPoint: true
-        //                                });
-        //                                canvas.add(textHeader);
-        //                                canvas.item(canvas.item.length - 1).hasRotatingPoint = true;
-        //                                $("#texteditor").css('display', 'none');
-        //                        } else if (this.value == 2) {
-        //                                textFooter = new fabric.Text("Text Body", {
-        //                                        left: 220,
-        //                                        top: 250,
-        //                                        fontFamily: 'helvetica',
-        //                                        angle: 0,
-        //                                        fill: '#000000',
-        //                                        scaleX: 1,
-        //                                        scaleY: 1,
-        //                                        fontWeight: '',
-        //                                        hasRotatingPoint: true
-        //                                });
-        //                                canvas.add(textFooter);
-        //                                canvas.item(canvas.item.length - 1).hasRotatingPoint = true;
-        //
-        //                                $("#texteditor").css('display', 'none');
-        //                        } else if (this.value == 3) {
-        //                                textBody = new fabric.Text("Text Footer", {
-        //                                        left: 220,
-        //                                        top: 150,
-        //                                        fontFamily: 'helvetica',
-        //                                        angle: 0,
-        //                                        fill: '#000000',
-        //                                        scaleX: 1,
-        //                                        scaleY: 1,
-        //                                        fontWeight: '',
-        //                                        hasRotatingPoint: true
-        //                                });
-        //                                canvas.add(textBody);
-        //                                canvas.item(canvas.item.length - 1).hasRotatingPoint = true;
-        //
-        //                                $("#texteditor").css('display', 'none');
-        //                        }
-        //                }
-        //        });
         var textFooter;
         var textHeader;
         var textBody;
@@ -125,8 +88,8 @@ $(document).ready(function () {
                                         return;
                                 }
                                 textHeader = new fabric.Text("add header here", {
-                                        left: 220,
-                                        top: 50,
+                                        left: 135,
+                                        top: 30,
                                         fontFamily: 'helvetica',
                                         angle: 0,
                                         fill: '#000000',
@@ -143,7 +106,7 @@ $(document).ready(function () {
                                         return;
                                 }
                                 textBody = new fabric.Text("add some body text", {
-                                        left: 220,
+                                        left: 135,
                                         top: 150,
                                         fontFamily: 'helvetica',
                                         angle: 0,
@@ -161,7 +124,7 @@ $(document).ready(function () {
                                         return;
                                 }
                                 textFooter = new fabric.Text("- at footer your name", {
-                                        left: 350,
+                                        left: 290,
                                         top: 290,
                                         fontFamily: 'helvetica',
                                         angle: 0,
@@ -170,7 +133,7 @@ $(document).ready(function () {
                                         scaleY: 1,
                                         fontWeight: '',
                                         fontStyle: 'italic',
-                                        fontSize: 24,
+                                        fontSize: 18,
                                         hasRotatingPoint: true
                                 });
                                 canvas.add(textFooter);
@@ -190,6 +153,20 @@ $(document).ready(function () {
                         }
                 }
         });
+
+        function keepPosFixed(obj) {
+                obj.setCoords();
+                // top-left  corner
+                if (obj.getBoundingRect().top < 0 || obj.getBoundingRect().left < 0) {
+                        obj.top = Math.max(obj.top, obj.top - obj.getBoundingRect().top);
+                        obj.left = Math.max(obj.left, obj.left - obj.getBoundingRect().left);
+                }
+                // bot-right corner
+                if (obj.getBoundingRect().top + obj.getBoundingRect().height > obj.canvas.height || obj.getBoundingRect().left + obj.getBoundingRect().width > obj.canvas.width) {
+                        obj.top = Math.min(obj.top, obj.canvas.height - obj.getBoundingRect().height + obj.top - obj.getBoundingRect().top);
+                        obj.left = Math.min(obj.left, obj.canvas.width - obj.getBoundingRect().width + obj.left - obj.getBoundingRect().left);
+                }
+        }
         document.getElementById('add-text').onclick = function () {
                 var text = $("#text-string").val();
                 var textSample = new fabric.Text(text, {
@@ -294,31 +271,35 @@ $(document).ready(function () {
                 var sw = canvas.width;
                 var sh = canvas.height;
                 canvas.setBackgroundImage(design, canvas.renderAll.bind(canvas), {
-                        backgroundImageOpacity: 0.5,
-                        backgroundImageStretch: true
+                        width: sw,
+                        height: sh,
+                        opacity: 0.5
                 });
-                //        fabric.Image.fromURL(design, function(oImg) {
-                //            var l = oImg.width / 2;
-                //            var t = oImg.height / 2;
-                //            console.log("posLeft > " + canvas.width);
-                //            oImg.set({
-                //                'left': l,
-                //                'top': t,
-                //                'width': sw,
-                //                'height': sh,
-                //                //'selectable': false
-                //            });
-                //            if (imgIns != null) {
-                //                //canvas.remove(imgIns);
-                //                imgIns = new Image(oImg);
-                //                imgIns.src =
-                //            } else {
-                //                imgIns = new Image(oImg);
-                //            }
-                //            imgIns = oImg;
-                //            canvas.add(oImg);
-                //
-                //        });
+        });
+        var clipart;
+        $(".img-art").click(function (e) {
+                var el = e.target;
+                /*temp code*/
+                var offset = 50;
+                var left = canvas.width / 2;
+                var top = canvas.height / 2;
+                var width = fabric.util.getRandomInt(30, 50);
+
+                fabric.Image.fromURL(el.src, function (image) {
+                        if (clipart != null) {
+                                canvas.remove(clipart);
+                        }
+                        image.set({
+                                left: left,
+                                top: top,
+                                angle: 0,
+                                padding: 10,
+                                cornersize: 10,
+                                hasRotatingPoint: true
+                        });
+                        clipart = image;
+                        canvas.add(image);
+                });
         });
         document.getElementById('remove-selected').onclick = function () {
                 var activeObject = canvas.getActiveObject(),
@@ -463,22 +444,24 @@ function onObjectSelected(e) {
         $("#text-string").val("");
         selectedObject.hasRotatingPoint = true
         if (selectedObject && selectedObject.type === 'text') {
-                //display text editor	    	
+                //display text editor
+                $("#texteditor").css('enable', 'true');
                 $("#texteditor").css('display', 'block');
                 $("#text-string").val(selectedObject.getText());
                 $('#text-fontcolor').miniColors('value', selectedObject.fill);
                 $('#text-strokecolor').miniColors('value', selectedObject.strokeStyle);
-                $("#imageeditor").css('display', 'block');
+                $("#imageeditor").css('display', 'none');
         } else if (selectedObject && selectedObject.type === 'image') {
                 //display image editor
                 $("#texteditor").css('display', 'none');
-                //$("#imageeditor").css('display', 'block');
+                $("#imageeditor").css('display', 'block');
         }
 }
 
 function onSelectedCleared(e) {
-        $("#texteditor").css('display', 'none');
         $("#text-string").val("");
+        $("#texteditor").css('display', 'none');
+        $("#texteditor").css('enable', 'false');
         $("#imageeditor").css('display', 'none');
 }
 
