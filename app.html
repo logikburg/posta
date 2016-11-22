@@ -20,12 +20,7 @@
         <script type="text/javascript" src="js/editor.js"></script>
         <script type="text/javascript" src="js/jquery.miniColors.min.js"></script>
 
-        <!-- Le styles -->
-        <!--        <link type="text/css" rel="stylesheet" href="css/jquery.miniColors.css" />-->
-
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-        <!--        <link href="css/bootstrap.min.css" rel="stylesheet" >-->
-        <!--        <link href="css/bootstrap-responsive.min.css" rel="stylesheet">-->
         <link href="css/bootstrap-social.css" rel="stylesheet">
 
         <link href="css/font-awesome.css" rel="stylesheet">
@@ -119,7 +114,7 @@
                 }
                 
                 .well.layoutThumbs {
-                        padding: 16px;
+                        padding: 5px;
                         height: auto;
                         /*                        max-height: 360px;*/
                         overflow: auto;
@@ -167,12 +162,18 @@
                         margin: 20px 0 0 0
                 }
                 
+                label div.sel-content h5 {
+                        font-family: 'Telex', sans-serif;
+                        color: #337ab7;
+                        font-weight: bold;
+                }
+                
                 .searchable-container label.btn-checkbox.active {
-                        color: #FFF
+                        color: #FFFFFF;
                 }
                 
                 .selection-container label h5.active {
-                        color: #FFFFFF
+                        color: #FFFFFF;
                 }
                 
                 .selection-container label.btn-checkbox {
@@ -212,6 +213,10 @@
                         display: block;
                         margin-bottom: -1px;
                 }
+                
+                .navbar-right {
+                        margin-top: 5px;
+                }
 
         </style>
 </head>
@@ -231,13 +236,15 @@
                                 <a class="navbar-brand" href="#">PostOnFace</a>
                         </div>
 
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                <p class="navbar-default navbar-right"><a class="btn btn-block btn-social btn-sm btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-sm']);"><i class="fa fa-facebook"></i>Sign in with Facebook</a></p>
-                        </div>
-                        <!-- /.navbar-collapse -->
+                        <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                        <p class="navbar-default navbar-right">
+                                                <a class="btn btn-block btn-social btn-sm btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-sm']);">
+                                                        <i class="fa fa-facebook"></i>Sign in with Facebook</a>
+                                        </p>
+                                </li>
+                        </ul>
                 </div>
-                <!-- /.container-fluid -->
         </nav>
         <div class="container">
                 <div class="row">
@@ -278,43 +285,40 @@
                                                         <div class="well layoutThumbs selection-container">
                                                                 <ul class="list-group">
                                                                         <li class="list-group-item">
-                                                                                <div data-toggle="buttons" class="btn-group">
-                                                                                        <label class="btn btn-checkbox" data-value="1">
-                                                                                                <div class="sel-content">
-                                                                                                        <img style="cursor: pointer;height: 48px;width: 224px;" class="img-responsive" src="img/text_header.png">
-                                                                                                        <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
-                                                                                                        <h5>Header</h5>
-                                                                                                </div>
-                                                                                        </label>
-                                                                                </div>
+                                                                                <label class="btn btn-checkbox" data-value="1">
+                                                                                        <div class="sel-content">
+                                                                                                <img style="cursor: pointer;height: 48px;width: 100%;" class="img-responsive" src="img/text_header.png">
+                                                                                                <!--                                                                                                <span class="glyphicon glyphicon-ok glyphicon-lg"></span>-->
+                                                                                                <h5>Header</h5>
+                                                                                        </div>
+                                                                                </label>
+
                                                                         </li>
                                                                         <li class="list-group-item">
-                                                                                <div data-toggle="buttons" class="btn-group">
-                                                                                        <label class="btn btn-checkbox" data-value="2">
-                                                                                                <div class="sel-content">
-                                                                                                        <img style="cursor:pointer;height: 48px;width: 224px;" class="img-responsive" src="img/text_body.png">
-                                                                                                        <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
-                                                                                                        <h5>Body</h5>
-                                                                                                </div>
-                                                                                        </label>
-                                                                                </div>
+                                                                                <label class="btn btn-checkbox" data-value="2">
+                                                                                        <div class="sel-content">
+                                                                                                <img style="cursor:pointer;height: 48px;width: 100%;" class="img-responsive" src="img/text_body.png">
+                                                                                                <!--                                                                                                <span class="glyphicon glyphicon-ok glyphicon-lg"></span>-->
+                                                                                                <h5>Body</h5>
+                                                                                        </div>
+                                                                                </label>
+
                                                                         </li>
                                                                         <li class="list-group-item">
-                                                                                <div data-toggle="buttons" class="btn-group">
-                                                                                        <label class="btn btn-checkbox" data-value="3">
-                                                                                                <div class="sel-content">
-                                                                                                        <img style="cursor:pointer;height: 48px;width: 224px;" class="img-responsive" src="img/text_footer.png">
-                                                                                                        <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
-                                                                                                        <h5>Footer</h5>
-                                                                                                </div>
-                                                                                        </label>
-                                                                                </div>
+                                                                                <label class="btn btn-checkbox" data-value="3">
+                                                                                        <div class="sel-content">
+                                                                                                <img style="cursor:pointer;height: 48px;width: 100%;" class="img-responsive" src="img/text_footer.png">
+                                                                                                <!--                                                                                                <span class="glyphicon glyphicon-ok glyphicon-lg"></span>-->
+                                                                                                <h5>Footer</h5>
+                                                                                        </div>
+                                                                                </label>
+
                                                                         </li>
                                                                 </ul>
                                                         </div>
                                                 </div>
                                                 <div class="tab-pane" style="height:auto;" id="tab3">
-                                                        <p style="font-size: 10px; margin: 0 0 0px;">* Note: only one design can be used.</p>
+                                                        <p style="font-size: 12px; margin: 0 0 0px;">* Note: only one design can be used.</p>
                                                         <div class="well classicThumbs">
                                                                 <img style="cursor:pointer;" class="img-art img-thumbnail" src="img/daisy-flower-100x100.png">
                                                                 <img style="cursor:pointer;" class="img-art img-thumbnail" src="img/thumbs-up-clipart-100x100.png">
