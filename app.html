@@ -4,7 +4,7 @@
 <head>
         <meta charset="utf-8">
         <title>Title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
 
@@ -20,6 +20,7 @@
         <script type="text/javascript" src="js/editor.js"></script>
         <script type="text/javascript" src="js/jquery.miniColors.min.js"></script>
 
+        <link type="text/css" rel="stylesheet" href="css/jquery.miniColors.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link href="css/bootstrap-social.css" rel="stylesheet">
 
@@ -189,6 +190,10 @@
                         border-color: #b1b1b1;
                 }
                 
+                .selection-container label.btn-checkbox.active {
+                        background: #b1b1b1;
+                }
+                
                 .selection-container .btn-group {
                         width: 90%
                 }
@@ -216,6 +221,23 @@
                 
                 .navbar-right {
                         margin-top: 5px;
+                }
+                
+                .fa {
+                        font-size: 14px;
+                }
+                
+                .btn-group>.btn {
+                        line-height: 22px;
+                }
+                
+                .btn-group>.btn:not(:first-child) {
+                        background: #c0c0c0;
+                }
+                
+                .btn-group>.btn:first-child {
+                        margin-left: 0;
+                        margin-right: -2px;
                 }
 
         </style>
@@ -336,11 +358,13 @@
                                 </div>
                         </div>
                         <div class="col-sm-6">
-                                <div align="center" style="min-height: 32px;">
+                                <div align="center" style="min-height: 36px;">
                                         <div class="clearfix">
                                                 <div class="btn-group inline pull-left" id="texteditor" style="display:none;">
                                                         <button id="font-family" class="btn dropdown-toggle" data-toggle="dropdown" title="Font Style">
-                                                                <i class="icon-font" style="width:19px;height:19px;"></i></button>
+                                                                <!--                                                                <i class="icon-font" style="width:19px;height:19px;"></i>-->
+                                                                <span class="glyphicon glyphicon-font" aria-hidden="true"></span>
+                                                        </button>
                                                         <ul class="dropdown-menu" role="menu" aria-labelledby="font-family-X">
                                                                 <li><a tabindex="-1" href="#" onclick="setFont('Arial');" class="Arial">Arial</a></li>
                                                                 <li><a tabindex="-1" href="#" onclick="setFont('Helvetica');" class="Helvetica">Helvetica</a></li>
@@ -357,14 +381,39 @@
                                                                 <li><a tabindex="-1" href="#" onclick="setFont('Plaster');" class="Plaster">Plaster</a></li>
                                                                 <li><a tabindex="-1" href="#" onclick="setFont('Engagement');" class="Engagement">Engagement</a></li>
                                                         </ul>
-                                                        <button id="text-bold" class="btn" data-original-title="Bold"><img src="img/font_bold.png" height="" width=""></button>
-                                                        <button id="text-italic" class="btn" data-original-title="Italic"><img src="img/font_italic.png" height="" width=""></button>
-                                                        <button id="text-strike" class="btn" title="Strike" style=""><img src="img/font_strikethrough.png" height="" width=""></button>
-                                                        <button id="text-underline" class="btn" title="Underline" style=""><img src="img/font_underline.png"></button>
-                                                        <a class="btn" href="#" rel="tooltip" data-placement="top" data-original-title="Font Color">
+                                                        <button id="text-bold" class="btn" data-original-title="Bold">
+                                                                <i class="fa fa-bold" aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button id="text-italic" class="btn" data-original-title="Italic">
+                                                                <i class="fa fa-italic" aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button id="text-strike" class="btn" title="Strike" style="">
+                                                                <i class="fa fa-strikethrough" aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button id="text-underline" class="btn" title="Underline" style="">
+                                                                <i class="fa fa-underline" aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button id="text-left" class="btn" title="Left align" style="">
+                                                                <i class="fa fa-align-left" aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button id="text-center" class="btn" title="Center Align" style="">
+                                                                <i class="fa fa-align-center" aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button id="text-right" class="btn" title="Right Align" style="">
+                                                                <i class="fa fa-align-right" aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <a class="btn custom-bg" href="#" rel="tooltip" data-placement="top" data-original-title="Font Color">
                                                                 <input type="hidden" id="text-fontcolor" class="color-picker" size="7" value="#000000">
                                                         </a>
-                                                        <a class="btn" href="#" rel="tooltip" data-placement="top" data-original-title="Font Border Color">
+
+                                                        <a class="btn custom-bg" href="#" rel="tooltip" data-placement="top" data-original-title="Font Border Color">
                                                                 <input type="hidden" id="text-strokecolor" class="color-picker" size="7" value="#000000">
                                                         </a>
 
@@ -372,9 +421,19 @@
                                                 </div>
                                                 <div class="pull-right" align="" id="imageeditor" style="display:none;">
                                                         <div class="btn-group">
-                                                                <button class="btn" id="bring-to-front" title="Bring to Front"><i class="icon-fast-backward rotate" style="height:19px;"></i></button>
-                                                                <button class="btn" id="send-to-back" title="Send to Back"><i class="icon-fast-forward rotate" style="height:19px;"></i></button>
-                                                                <button id="remove-selected" class="btn" title="Delete selected item"><i class="icon-trash" style="height:19px;"></i></button>
+                                                                <button class="btn" id="bring-to-front" title="Bring to Front">
+                                                                        <!--                                                                        <i class="icon-fast-backward rotate" style="height:19px;"></i>-->
+                                                                        <i class="fa fa-fast-backward rotate" aria-hidden="true"></i>
+                                                                </button>
+
+                                                                <button class="btn" id="send-to-back" title="Send to Back">
+                                                                        <!--                                                                        <i class="icon-fast-forward rotate" style="height:19px;"></i>-->
+                                                                        <i class="fa fa-fast-forward rotate" aria-hidden="true"></i>
+                                                                </button>
+
+                                                                <button id="remove-selected" class="btn" title="Delete selected item">
+                                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                </button>
                                                         </div>
                                                 </div>
                                         </div>
