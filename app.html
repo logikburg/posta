@@ -27,6 +27,14 @@
         <link href="css/font-awesome.css" rel="stylesheet">
 
         <style type="text/css">
+                body {
+                        background: url(img/confectionary.png) repeat;
+                }
+                
+                .navbar-custom {
+                        background-color: #000000;
+                }
+                
                 .color-preview {
                         border: 1px solid #CCC;
                         margin: 2px;
@@ -101,6 +109,10 @@
                 
                 .Engagement {
                         font-family: "Engagement";
+                }
+                
+                .well {
+                        background-color: #e7e7e7;
                 }
                 
                 .well.padding {
@@ -239,12 +251,72 @@
                         margin-left: 0;
                         margin-right: -2px;
                 }
+                
+                #login-dp {
+                        min-width: 250px;
+                        padding: 14px 14px 0;
+                        overflow: hidden;
+                        background-color: rgba(255, 255, 255, .8);
+                }
+                
+                #login-dp .help-block {
+                        font-size: 12px
+                }
+                
+                #login-dp .bottom {
+                        background-color: rgba(255, 255, 255, .8);
+                        border-top: 1px solid #ddd;
+                        clear: both;
+                        padding: 14px;
+                }
+                
+                #login-dp .social-buttons {
+                        margin: 12px 0
+                }
+                
+                #login-dp .social-buttons a {
+                        width: 49%;
+                }
+                
+                #login-dp .form-group {
+                        margin-bottom: 10px;
+                }
+                
+                .btn-fb {
+                        color: #fff;
+                        background-color: #3b5998;
+                }
+                
+                .btn-fb:hover {
+                        color: #fff;
+                        background-color: #496ebc
+                }
+                
+                .btn-tw {
+                        color: #fff;
+                        background-color: #55acee;
+                }
+                
+                .btn-tw:hover {
+                        color: #fff;
+                        background-color: #59b5fa;
+                }
+                
+                @media(max-width:768px) {
+                        #login-dp {
+                                background-color: inherit;
+                                color: #fff;
+                        }
+                        #login-dp .bottom {
+                                background-color: inherit;
+                                border-top: 0 none;
+                        }
+                }
 
         </style>
 </head>
 
 <body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
-
         <nav class="navbar navbar-default">
                 <div class="container">
                         <!-- Brand and toggle get grouped for better mobile display -->
@@ -259,9 +331,20 @@
                         </div>
 
                         <ul class="nav navbar-nav navbar-right">
+                                <li style="line-height: 36px;padding-right: 8px;   color: #1d2129;font-weight: 700;">
+                                        <p>
+                                                <button type="button" id="download" name="download" class="btn btn-success btn-sm" onclick="shareDownload()">
+                                                        <span class="glyphicon glyphicon-download"></span> Download
+                                                </button>
+
+                                                <button type="button" id="share" name="share" class="btn btn-success btn-sm" onclick="shareDownload()">
+                                                        <span class="glyphicon glyphicon-share"></span> Share
+                                                </button>
+                                        </p>
+                                </li>
                                 <li>
                                         <p class="navbar-default navbar-right">
-                                                <a class="btn btn-block btn-social btn-sm btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-sm']);">
+                                                <a class="btn btn-block btn-social btn-sm btn-facebook" style="display:none;" onclick="loginApp()">
                                                         <i class="fa fa-facebook"></i>Sign in with Facebook</a>
                                         </p>
                                 </li>
@@ -295,7 +378,7 @@
                                                                 <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image6.jpg">
                                                         </div>
                                                         <hr>
-                                                        <button class="btn btn-primary">Upload</button>
+                                                        <button class="btn btn-primary">Upload Image</button>
                                                 </div>
                                                 <div class="tab-pane" id="tab2">
                                                         <div class="well">
@@ -352,7 +435,7 @@
                                                                 <img style="cursor:pointer;" class="img-art img-thumbnail" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAABL0lEQVR4nO3cMQ6CQBRAQVFvaWOsbT2FrbVn9QaEJ26QZKZHNi+/WMjidLpeDixz3HoBeyJWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWcN7qxu/74+trb6/nD1eynMkKxArECsQKxArECsQKxArECgbu4Of36Gt24eN+eZ7JCsQKxArECsQKxArECsQKxAqm+S9Z9/imfNyaTVYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFYgViBWIFaw2SmaPTJZgViBWIFYgViBWIFYgViBWMGqHfz8mZP/PAe/5rnCZAViBWIFYgViBWIFYgViBWIFA9/BjzsH779odkCsQKxArECsQKxArECsQKzgA29sHs723zLdAAAAAElFTkSuQmCC">
                                                         </div>
                                                         <hr>
-                                                        <button class="btn btn-primary">Upload</button>
+                                                        <button class="btn btn-primary">Upload Design</button>
                                                 </div>
                                         </div>
                                 </div>
@@ -440,7 +523,7 @@
                                 </div>
                                 <!--	EDITOR      -->
                                 <!-- 480 x 320 facebook posting-->
-                                <div style="background-color: #ffffff; position: relative; left:25%px; top: 10px; height:320px;">
+                                <div style="background-color: #ffffff; position: relative; left:25%px; top: 10px; height:320px;width:480px;">
                                         <div id="drawingArea" style="position: absolute;top:0px;left:0px;z-index: 10;width: 480px; height:320px;backgorund:#002200;">
                                                 <canvas id="tc" width="480" height="320" class="hover"></canvas>
                                         </div>
@@ -551,7 +634,7 @@
         <!-- Footer ================================================== -->
         <footer class="footer">
                 <div class="container">
-                        <p class="pull-right"><a href="#">Back to top</a></p>
+                        <p class="pull-right">@ Copyright 2016</p>
                 </div>
         </footer>
         <!-- Le javascript
@@ -563,22 +646,24 @@
                 function statusChangeCallback(response) {
                         console.log('statusChangeCallback');
                         console.log(response);
+
                         // The response object is returned with a status field that lets the
                         // app know the current login status of the person.
                         // Full docs on the response object can be found in the documentation
                         // for FB.getLoginStatus().
                         if (response.status === 'connected') {
                                 // Logged into your app and Facebook.
-                                testAPI();
+                                _dload = true;
+                                return _dload;
                         } else if (response.status === 'not_authorized') {
                                 // The person is logged into Facebook, but not your app.
-                                document.getElementById('status').innerHTML = 'Please log ' +
-                                        'into this app.';
+                                _dload = false;
+                                return _dload;
                         } else {
                                 // The person is not logged into Facebook, so we're not sure if
                                 // they are logged into this app or not.
-                                document.getElementById('status').innerHTML = 'Please log ' +
-                                        'into Facebook.';
+                                _dload = false;
+                                return _dload;
                         }
                 }
 
@@ -613,10 +698,40 @@
                         // These three cases are handled in the callback function.
 
                         FB.getLoginStatus(function(response) {
-                                statusChangeCallback(response);
+                                if (statusChangeCallback(response)) {
+                                        $(".btn-facebook").hide();
+                                } else {
+                                        $(".btn-facebook").show();
+                                }
                         });
 
                 };
+
+
+                function logoutApp() {
+                        FB.logout(function(response) {
+                                console.log('logout Successfully! ' + response.name);
+                        });
+                }
+
+                function loginApp() {
+                        FB.login(function(response) {
+                                console.log('Welcome! ' + response.name);
+                        }, {
+                                scope: 'publish_actions, email',
+                                return_scopes: true
+                        });
+                }
+
+                var _dload = false;
+
+                function shareDownload() {
+                        if (_dload) {
+
+                        } else {
+
+                        }
+                }
 
                 // Load the SDK asynchronously
                 (function(d, s, id) {
@@ -634,8 +749,7 @@
                         console.log('Welcome!  Fetching your information.... ');
                         FB.api('/me', function(response) {
                                 console.log('Successful login for: ' + response.name);
-                                document.getElementById('status').innerHTML =
-                                        'Thanks for logging in, ' + response.name + '!';
+                                //                                document.getElementById('status').innerHTML = // 'Thanks for logging in, ' + response.name + '!';
                         });
                 }
 
