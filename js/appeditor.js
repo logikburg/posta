@@ -77,6 +77,19 @@ $(document).ready(function () {
         });
         $('.language-control').change(function () { //TO DO
         });
+
+        //$("body").on("click", ":not(canvas, #drawingArea, .canvas-container, div:first:#drawingArea)", function (event) {
+        $(":not(#drawingArea, div.canvas-container, canvas.upper-canvas.hover)").on("click", function (event) {
+                if ($(event.currentTarget).children("#drawingArea").length > 0 || $(event.currentTarget).parent("#textEditor") > 0) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        return;
+                }
+                console.log(":not(.canvas-container) > ")
+                        //event.stopPropagation();
+                        //event.preventDefault();
+        });
+
         var textFooter;
         var textHeader;
         var textBody;
@@ -87,9 +100,10 @@ $(document).ready(function () {
                                 if (textHeader != undefined) {
                                         return;
                                 }
-                                textHeader = new fabric.Text("add header here", {
+                                textHeader = new fabric.Textbox("add header here", {
                                         left: 135,
                                         top: 30,
+                                        width: 250,
                                         fontFamily: 'helvetica',
                                         angle: 0,
                                         fill: '#000000',
@@ -99,6 +113,7 @@ $(document).ready(function () {
                                         fontWeight: '',
                                         hasRotatingPoint: true
                                 });
+                                textHeader.textAlign = 'center';
                                 canvas.add(textHeader);
                                 canvas.item(canvas.item.length - 1).hasRotatingPoint = true;
                         } else if ($(this).attr('data-value') == 2) {
@@ -108,6 +123,7 @@ $(document).ready(function () {
                                 textBody = new fabric.Text("add some body text", {
                                         left: 135,
                                         top: 150,
+                                        width: 300,
                                         fontFamily: 'helvetica',
                                         angle: 0,
                                         fill: '#999999',
@@ -117,6 +133,7 @@ $(document).ready(function () {
                                         fontSize: 24,
                                         hasRotatingPoint: true
                                 });
+                                textBody.textAlign = 'center';
                                 canvas.add(textBody);
                                 canvas.item(canvas.item.length - 1).hasRotatingPoint = true;
                         } else if ($(this).attr('data-value') == 3) {
@@ -126,6 +143,7 @@ $(document).ready(function () {
                                 textFooter = new fabric.Text("- at footer your name", {
                                         left: 290,
                                         top: 290,
+                                        width: 250,
                                         fontFamily: 'helvetica',
                                         angle: 0,
                                         fill: '#000000',
@@ -169,23 +187,6 @@ $(document).ready(function () {
                         obj.left = Math.min(obj.left, obj.canvas.width - obj.getBoundingRect().width + obj.left - obj.getBoundingRect().left);
                 }
         }
-        document.getElementById('add-text').onclick = function () {
-                var text = $("#text-string").val();
-                var textSample = new fabric.Text(text, {
-                        left: fabric.util.getRandomInt(0, 100),
-                        top: fabric.util.getRandomInt(0, 100),
-                        fontFamily: 'helvetica',
-                        angle: 0,
-                        fill: '#000000',
-                        scaleX: 0.5,
-                        scaleY: 0.5,
-                        fontWeight: '',
-                        hasRotatingPoint: true
-                });
-                canvas.add(textSample);
-                canvas.item(canvas.item.length - 1).hasRotatingPoint = true;
-                $("#texteditor").css('display', 'block');
-        };
         $("#text-string").keyup(function () {
                 var activeObject = canvas.getActiveObject();
                 if (activeObject && activeObject.type === 'text') {
@@ -345,56 +346,56 @@ $(document).ready(function () {
         };
         $("#text-bold").click(function () {
                 var activeObject = canvas.getActiveObject();
-                if (activeObject && activeObject.type === 'text') {
+                if (activeObject && activeObject.type === 'textbox') {
                         activeObject.fontWeight = (activeObject.fontWeight == 'bold' ? '' : 'bold');
                         canvas.renderAll();
                 }
         });
         $("#text-italic").click(function () {
                 var activeObject = canvas.getActiveObject();
-                if (activeObject && activeObject.type === 'text') {
+                if (activeObject && activeObject.type === 'textbox') {
                         activeObject.fontStyle = (activeObject.fontStyle == 'italic' ? '' : 'italic');
                         canvas.renderAll();
                 }
         });
         $("#text-strike").click(function () {
                 var activeObject = canvas.getActiveObject();
-                if (activeObject && activeObject.type === 'text') {
+                if (activeObject && activeObject.type === 'textbox') {
                         activeObject.textDecoration = (activeObject.textDecoration == 'line-through' ? '' : 'line-through');
                         canvas.renderAll();
                 }
         });
         $("#text-underline").click(function () {
                 var activeObject = canvas.getActiveObject();
-                if (activeObject && activeObject.type === 'text') {
+                if (activeObject && activeObject.type === 'textbox') {
                         activeObject.textDecoration = (activeObject.textDecoration == 'underline' ? '' : 'underline');
                         canvas.renderAll();
                 }
         });
         $("#text-left").click(function () {
                 var activeObject = canvas.getActiveObject();
-                if (activeObject && activeObject.type === 'text') {
+                if (activeObject && activeObject.type === 'textbox') {
                         activeObject.textAlign = 'left';
                         canvas.renderAll();
                 }
         });
         $("#text-center").click(function () {
                 var activeObject = canvas.getActiveObject();
-                if (activeObject && activeObject.type === 'text') {
+                if (activeObject && activeObject.type === 'textbox') {
                         activeObject.textAlign = 'center';
                         canvas.renderAll();
                 }
         });
         $("#text-right").click(function () {
                 var activeObject = canvas.getActiveObject();
-                if (activeObject && activeObject.type === 'text') {
+                if (activeObject && activeObject.type === 'textbox') {
                         activeObject.textAlign = 'right';
                         canvas.renderAll();
                 }
         });
         $("#font-family").change(function () {
                 var activeObject = canvas.getActiveObject();
-                if (activeObject && activeObject.type === 'text') {
+                if (activeObject && activeObject.type === 'textbox') {
                         activeObject.fontFamily = this.value;
                         canvas.renderAll();
                 }
@@ -402,7 +403,7 @@ $(document).ready(function () {
         $('#text-bgcolor').miniColors({
                 change: function (hex, rgb) {
                         var activeObject = canvas.getActiveObject();
-                        if (activeObject && activeObject.type === 'text') {
+                        if (activeObject && activeObject.type === 'textbox') {
                                 activeObject.backgroundColor = this.value;
                                 canvas.renderAll();
                         }
@@ -415,7 +416,7 @@ $(document).ready(function () {
         $('#text-fontcolor').miniColors({
                 change: function (hex, rgb) {
                         var activeObject = canvas.getActiveObject();
-                        if (activeObject && activeObject.type === 'text') {
+                        if (activeObject && activeObject.type === 'textbox') {
                                 activeObject.fill = this.value;
                                 canvas.renderAll();
                         }
@@ -428,7 +429,7 @@ $(document).ready(function () {
         $('#text-strokecolor').miniColors({
                 change: function (hex, rgb) {
                         var activeObject = canvas.getActiveObject();
-                        if (activeObject && activeObject.type === 'text') {
+                        if (activeObject && activeObject.type === 'textbox') {
                                 activeObject.strokeStyle = this.value;
                                 canvas.renderAll();
                         }
@@ -445,7 +446,7 @@ function onObjectSelected(e) {
         var selectedObject = e.target;
         $("#text-string").val("");
         selectedObject.hasRotatingPoint = true
-        if (selectedObject && selectedObject.type === 'text') {
+        if (selectedObject && selectedObject.type === 'textbox') {
                 //display text editor
                 $("#texteditor").css('enable', 'true');
                 $("#texteditor").css('display', 'block');
@@ -469,7 +470,7 @@ function onSelectedCleared(e) {
 
 function setFont(font) {
         var activeObject = canvas.getActiveObject();
-        if (activeObject && activeObject.type === 'text') {
+        if (activeObject && activeObject.type === 'textbox') {
                 activeObject.fontFamily = font;
                 canvas.renderAll();
         }

@@ -17,7 +17,7 @@
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/fabric.js"></script>
-        <script type="text/javascript" src="js/editor.js"></script>
+        <script type="text/javascript" src="js/appeditor.js"></script>
         <script type="text/javascript" src="js/jquery.miniColors.min.js"></script>
 
         <link type="text/css" rel="stylesheet" href="css/jquery.miniColors.css" />
@@ -317,6 +317,10 @@
                         margin-left: 0px;
                         margin-right: 30px
                 }
+                
+                .custom-nav-margin-bottom {
+                        margin-bottom: 10px;
+                }
 
         </style>
 </head>
@@ -362,7 +366,7 @@
                                 <div class="col-sm-4">
                                         <div class="tabbable">
                                                 <!-- Only required for left/right tabs -->
-                                                <ul class="nav nav-tabs">
+                                                <ul class="nav nav-tabs custom-nav-margin-bottom">
                                                         <li class="active"><a href="#tab1" data-toggle="tab">Background</a></li>
                                                         <li><a href="#tab2" data-toggle="tab">Layout</a></li>
                                                         <li><a href="#tab3" data-toggle="tab">Design</a></li>
@@ -536,10 +540,9 @@
                                         </div>
 
                                         <div class="well" style="height:140px; width:480px;margin-top: 20px;padding-top:8px;">
-                                                <!--                        <p class="text-left" style="margin:0 0 5px;">For type in another language please choose from dropdown menu</p>-->
                                                 <span class="text-left" style="margin:0 0 5px;"><strong>Change Language</strong></span>
                                                 <div class="selectContainer">
-                                                        <select name="language" class="language-control" style="margin-bottom:0px;height: 26px;width:100%;">
+                                                        <select name="language" class="language-control" style="margin-bottom:0px;height: 26px;width:100%;" onchange="lc_onChange(event)">
                                                                 <option value="english">English</option>
                                                                 <option value="hindi">English to Hindi</option>
                                                                 <option value="punjabi">English to Punjabi</option>
@@ -548,11 +551,8 @@
                                                 </div>
                                                 <p style="font-size: 10px; margin: 0 0 0px;">* For another language, Type in English and Press Space it will convert automatically.</p>
                                                 <hr />
-                                                <!--input class="span2" id="text-string" type="text" style="width: 95%" placeholder="add text here..." -->
+
                                                 <textarea id="text-string" cols="180" rows="2" name="data" class="custome" placeholder="add text here..." style="line-height: 1.5em; font-family: Arial, Helvetica, sans-serif; font-size: 14px;"></textarea>
-                                                <button id="add-text" class="btn" title="Add text" style="display: none;">
-                                                        <i class="icon-share-alt"></i>
-                                                </button>
 
                                                 <div class="jsapi-code">
 
@@ -573,6 +573,62 @@
                                                                         packages: "transliteration"
                                                                 });
 
+                                                                var control;
+                                                                var options;
+
+                                                                function lc_onChange(event) {
+                                                                        var lan = [];
+                                                                        if (event.currentTarget.selectedIndex == 0) {
+                                                                                if (control != null) {
+                                                                                        control.disableTransliteration();
+                                                                                }
+                                                                                return;
+                                                                        } else if (event.currentTarget.selectedIndex == 1) {
+                                                                                if (control) {
+                                                                                        control.enableTransliteration();
+                                                                                        control.setLanguagePair(
+                                                                                                google.elements.transliteration.LanguageCode.ENGLISH,
+                                                                                                google.elements.transliteration.LanguageCode.HINDI);
+
+                                                                                        return;
+                                                                                }
+                                                                                lan = [google.elements.transliteration.LanguageCode.HINDI];
+                                                                        } else if (event.currentTarget.selectedIndex == 2) {
+                                                                                if (control) {
+                                                                                        control.enableTransliteration();
+                                                                                        control.setLanguagePair(
+                                                                                                google.elements.transliteration.LanguageCode.ENGLISH,
+                                                                                                google.elements.transliteration.LanguageCode.PUNJABI);
+
+                                                                                        return;
+                                                                                }
+                                                                                lan = [google.elements.transliteration.LanguageCode.PUNJABI];
+                                                                        } else if (event.currentTarget.selectedIndex == 3) {
+                                                                                if (control) {
+                                                                                        control.enableTransliteration();
+                                                                                        control.setLanguagePair(
+                                                                                                google.elements.transliteration.LanguageCode.ENGLISH,
+                                                                                                google.elements.transliteration.LanguageCode.MARATHI);
+
+                                                                                        return;
+                                                                                }
+                                                                                lan = [google.elements.transliteration.LanguageCode.MARATHI];
+                                                                        }
+
+                                                                        options = {
+                                                                                sourceLanguage: google.elements.transliteration.LanguageCode.ENGLISH,
+                                                                                destinationLanguage: lan,
+                                                                                shortcutKey: 'ctrl+g',
+                                                                                transliterationEnabled: true
+                                                                        };
+
+                                                                        control =
+                                                                                new google.elements.transliteration.TransliterationControl(options);
+
+                                                                        control.makeTransliteratable(['text-string']);
+
+                                                                }
+
                                                                 function onLoad() {
                                                                         var options = {
                                                                                 sourceLanguage: google.elements.transliteration.LanguageCode.ENGLISH,
@@ -581,16 +637,11 @@
                                                                                 transliterationEnabled: true
                                                                         };
 
-                                                                        // Create an instance on TransliterationControl with the required
-                                                                        // options.
                                                                         var control =
                                                                                 new google.elements.transliteration.TransliterationControl(options);
 
-                                                                        // Enable transliteration in the textbox with id
-                                                                        // 'transliterateTextarea'.
                                                                         control.makeTransliteratable(['data']);
                                                                 }
-                                                                google.setOnLoadCallback(onLoad);
 
                                                         </script>
                                                         <script src="https://www.google.com/uds/?file=elements&amp;v=1&amp;packages=transliteration" type="text/javascript"></script>
@@ -614,8 +665,6 @@
                                                                 }
 
                                                         </script>
-
-                                                        <textarea id="data" cols="180" rows="2" name="data" style="width: 95%" placeholder="Type in English and Press Space it will convert in Punjabi." style="line-height: 1.5em; font-family: Arial, Helvetica, sans-serif; font-size: 14px;"></textarea>
 
                                                         <form id="etoh">
                                                                 <table style="bgcolor:red;border:0; border-collapse: collapse;">
@@ -663,6 +712,7 @@
                         if (response.status === 'connected') {
                                 // Logged into your app and Facebook.
                                 _dload = true;
+                                _at = response.authResponse.accessToken;
                                 return _dload;
                         } else if (response.status === 'not_authorized') {
                                 // The person is logged into Facebook, but not your app.
@@ -725,14 +775,18 @@
 
                 function loginApp() {
                         FB.login(function(response) {
-                                console.log('Welcome! ' + response.name);
+                                console.log('Welcome! ' + response);
+                                _dload = true;
+                                $(".btn-facebook").hide();
+                                _at = response.authResponse.accessToken;
                         }, {
-                                scope: 'publish_actions, email',
+                                scope: 'publish_actions',
                                 return_scopes: true
                         });
                 }
 
                 var _dload = false;
+                var _at;
 
                 function shareDownload(event) {
                         if (_dload) {
@@ -743,7 +797,10 @@
                                         ("share" == event.target.name)) {
                                         console.log("share");
                                         canvas.deactivateAll().renderAll();
-                                        window.open(canvas.toDataURL('png'));
+                                        pitf(_at);
+                                        //var imageData = canvas.toDataURL('png');
+                                        //imageData = imageData.replace("data:image/png;base64,", "");
+                                        //postImageToFacebook(_at);
                                 }
                         } else {
 
@@ -768,6 +825,94 @@
                                 console.log('Successful login for: ' + response.name);
                                 //                                document.getElementById('status').innerHTML = // 'Thanks for logging in, ' + response.name + '!';
                         });
+                }
+
+                function postImageToFacebook(token) {
+                        var imageData = canvas.toDataURL("image/png");
+                        try {
+                                blob = dataURItoBlob(imageData);
+                        } catch (e) {
+                                console.log(e);
+                        }
+                        var fd = new FormData();
+                        fd.append("access_token", token);
+                        fd.append("source", blob);
+                        fd.append("no_story", true);
+
+                        // Upload image to facebook without story(post to feed)
+                        $.ajax({
+                                url: "https://graph.facebook.com/me/photos?access_token=" + token,
+                                type: "POST",
+                                data: fd,
+                                processData: false,
+                                contentType: false,
+                                cache: false,
+                                success: function(data) {
+                                        console.log("success: ", data);
+
+                                        // Get image source url
+                                        FB.api(
+                                                "/" + data.id + "?fields=images",
+                                                function(response) {
+                                                        if (response && !response.error) {
+                                                                //console.log(response.images[0].source);
+
+                                                                // Create facebook post using image
+                                                                FB.api(
+                                                                        "/me/feed",
+                                                                        "POST", {
+                                                                                "picture": response.images[0].source,
+                                                                                "link": window.location.href,
+                                                                                "privacy": {
+                                                                                        value: 'SELF'
+                                                                                }
+                                                                        },
+                                                                        function(response) {
+                                                                                if (response && !response.error) {
+                                                                                        /* handle the result */
+                                                                                        console.log("Posted story to facebook");
+                                                                                        console.log(response);
+                                                                                }
+                                                                        }
+                                                                );
+                                                        }
+                                                }
+                                        );
+                                },
+                                error: function(shr, status, data) {
+                                        console.log("error " + data + " Status " + shr.status);
+                                },
+                                complete: function(data) {
+                                        console.log('Post to facebook Complete');
+                                }
+                        });
+                }
+
+                // Convert a data URI to blob
+                function dataURItoBlob(dataURI) {
+                        var byteString = atob(dataURI.split(',')[1]);
+                        var ab = new ArrayBuffer(byteString.length);
+                        var ia = new Uint8Array(ab);
+                        for (var i = 0; i < byteString.length; i++) {
+                                ia[i] = byteString.charCodeAt(i);
+                        }
+                        return new Blob([ab], {
+                                type: 'image/png'
+                        });
+                }
+
+                function pitf(authToken) {
+
+                        FB.ui({
+                                        method: 'feed',
+                                        picture: 'https://d3ijcis4e2ziok.cloudfront.net/engaging-images-backgrounds/batch-2-full-size/36.jpg',
+                                        caption: "PostOnFace.com",
+                                },
+                                function(response) {
+                                        console.log("response " + response);
+                                });
+
+
                 }
 
         </script>
