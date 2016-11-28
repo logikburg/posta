@@ -203,7 +203,7 @@
                 }
                 
                 .selection-container label.btn-checkbox.active {
-                        background: #b1b1b1;
+                        background: #9cf;
                 }
                 
                 .selection-container .btn-group {
@@ -214,10 +214,25 @@
                         padding: 4px;
                         background-color: #fff;
                         border: 1px solid #ccc;
-                        border: 1px solid rgba(0, 0, 0, 0.2);
                         -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
                         -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
                         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                }
+                
+                .bg-thumbnail {
+                        padding: 4px;
+                        margin-top: 2px;
+                        margin-bottom: 2px;
+                        background-color: #fff;
+                        border: 1px solid #ccc;
+                        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                }
+                
+                .bg-thumbnail.active {
+                        background-color: #7af;
+                        border: 1px solid #7af;
                 }
                 
                 .span6 {
@@ -321,6 +336,10 @@
                 .custom-nav-margin-bottom {
                         margin-bottom: 10px;
                 }
+                
+                .nav>li>a {
+                        padding: 10px 14px;
+                }
 
         </style>
 </head>
@@ -363,7 +382,7 @@
                 </nav>
                 <div class="container">
                         <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                         <div class="tabbable">
                                                 <!-- Only required for left/right tabs -->
                                                 <ul class="nav nav-tabs custom-nav-margin-bottom">
@@ -374,18 +393,18 @@
                                                 <div class="tab-content">
                                                         <div class="tab-pane active" id="tab1">
                                                                 <div class="well thumbs">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image1.jpg">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image7.jpg">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image8.jpg">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image2.jpg">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image3.jpg">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image4.jpg">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image5.jpg">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image6.jpg">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image5.jpg">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image6.jpg">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image5.jpg">
-                                                                        <img style="cursor:pointer;height:78px;width:104px;" class="img-polaroid" src="img/image6.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image1.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image7.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image8.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image2.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image3.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image4.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image5.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image6.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image5.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image6.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image5.jpg">
+                                                                        <img style="cursor:pointer;height: 104px;width: 228px;" class="img-polaroid bg-thumbnail" src="img/image6.jpg">
                                                                 </div>
                                                                 <hr>
                                                                 <button class="btn btn-primary">Upload Image</button>
@@ -414,7 +433,7 @@
                                                                                                 <div class="sel-content">
                                                                                                         <img style="cursor:pointer;height: 48px;width: 100%;" class="img-responsive" src="img/text_body.png">
                                                                                                         <!--                                                                                                <span class="glyphicon glyphicon-ok glyphicon-lg"></span>-->
-                                                                                                        <h5>Body</h5>
+                                                                                                        <h5>Header, Body</h5>
                                                                                                 </div>
                                                                                         </label>
 
@@ -424,7 +443,7 @@
                                                                                                 <div class="sel-content">
                                                                                                         <img style="cursor:pointer;height: 48px;width: 100%;" class="img-responsive" src="img/text_footer.png">
                                                                                                         <!--                                                                                                <span class="glyphicon glyphicon-ok glyphicon-lg"></span>-->
-                                                                                                        <h5>Footer</h5>
+                                                                                                        <h5>Signature</h5>
                                                                                                 </div>
                                                                                         </label>
 

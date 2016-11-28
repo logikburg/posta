@@ -101,7 +101,7 @@ $(document).ready(function () {
                                         return;
                                 }
                                 textHeader = new fabric.Textbox("add header here", {
-                                        left: 135,
+                                        left: 104,
                                         top: 30,
                                         width: 250,
                                         fontFamily: 'helvetica',
@@ -120,8 +120,8 @@ $(document).ready(function () {
                                 if (textBody != undefined) {
                                         return;
                                 }
-                                textBody = new fabric.Text("add some body text", {
-                                        left: 135,
+                                textBody = new fabric.Textbox("add some body text", {
+                                        left: 80,
                                         top: 150,
                                         width: 300,
                                         fontFamily: 'helvetica',
@@ -140,7 +140,7 @@ $(document).ready(function () {
                                 if (textFooter != undefined) {
                                         return;
                                 }
-                                textFooter = new fabric.Text("- at footer your name", {
+                                textFooter = new fabric.Textbox("- at footer your name", {
                                         left: 290,
                                         top: 290,
                                         width: 250,
@@ -189,7 +189,7 @@ $(document).ready(function () {
         }
         $("#text-string").keyup(function () {
                 var activeObject = canvas.getActiveObject();
-                if (activeObject && activeObject.type === 'text') {
+                if (activeObject && activeObject.type === 'textbox') {
                         activeObject.text = this.value;
                         canvas.renderAll();
                 }
@@ -270,6 +270,8 @@ $(document).ready(function () {
         canvas.renderAll();
         $(".img-polaroid").click(function (e) {
                 var el = e.target;
+                $(".img-polaroid").removeClass("active");
+                $(el).addClass("active");
                 var design = $(this).attr("src");
                 var sw = canvas.width;
                 var sh = canvas.height;
